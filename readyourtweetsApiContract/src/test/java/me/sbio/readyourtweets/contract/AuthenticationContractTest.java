@@ -3,26 +3,25 @@ package me.sbio.readyourtweets.contract;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.builder.RequestSpecBuilder;
 import com.jayway.restassured.specification.RequestSpecification;
-import me.sbio.readyourtweets.config.ContractTestConfig;
-import me.sbio.readyourtweets.util.BearerTokenCreationException;
-import me.sbio.readyourtweets.util.TwitterKeyUtil;
+import me.sbio.readyourtweets.twitterapiclient.util.BearerTokenCreationException;
+import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
+import me.sbio.readyourtweets.twitterapiclient.util.TwitterKeyUtil;
 import org.junit.Before;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
-import static com.jayway.restassured.http.ContentType.URLENC;
 import static org.hamcrest.Matchers.*;
 
 public class AuthenticationContractTest {
 
     private static final String AUTHENTICATION_PATH = "/oauth2/token";
 
-    private final ContractTestConfig config;
+    private final TwitterConfig config;
     private final TwitterKeyUtil twitterKeyUtil;
 
     public AuthenticationContractTest() {
-        config = new ContractTestConfig();
+        config = new TwitterConfig();
         twitterKeyUtil = new TwitterKeyUtil();
     }
 
@@ -53,7 +52,7 @@ public class AuthenticationContractTest {
     }
 
     @Test
-         public void shouldReturnForbiddenForInvalidConsumerKey() throws BearerTokenCreationException {
+    public void shouldReturnForbiddenForInvalidConsumerKey() throws BearerTokenCreationException {
         String consumerKey = "INVALID_KEY";
         String consumerSecret = config.getConsumerSecret();
 
@@ -86,7 +85,7 @@ public class AuthenticationContractTest {
 
     private RequestSpecification anAuthenticationRequestSpecification(String encodedBearerToken) {
         return new RequestSpecBuilder()
-                .setContentType(URLENC)
+                .setContentType("application/x-www-form-urlencoded;charset=UTF-8")
                 .addHeader("Authorization", "Basic " + encodedBearerToken)
                 .setBody("grant_type=client_credentials").build();
     }

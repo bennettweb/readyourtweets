@@ -1,4 +1,4 @@
-package me.sbio.readyourtweets.util;
+package me.sbio.readyourtweets.twitterapiclient.util;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;

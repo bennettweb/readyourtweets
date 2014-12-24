@@ -1,4 +1,4 @@
-package me.sbio.readyourtweets.util;
+package me.sbio.readyourtweets.twitterapiclient.util;
 
 import org.junit.Before;
 import org.junit.Test;

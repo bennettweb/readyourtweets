@@ -1,6 +1,6 @@
-package me.sbio.readyourtweets.config;
+package me.sbio.readyourtweets.twitterapiclient.config;
 
-public class ContractTestConfig {
+public class TwitterConfig {
 
     private static final String DEFAULT_BASE_URI = "https://api.twitter.com";
     private static final String DEFAULT_PORT = "443";

@@ -5,19 +5,22 @@ import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
 import me.sbio.readyourtweets.twitterapiclient.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.twitterapiclient.util.TwitterKeyUtil;
+import me.sbio.twitterstub.TwitterStubServerParams;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
+import static me.sbio.twitterstub.TwitterStubServerParams.*;
 
-public class AuthenticationMappings {
+public class AuthenticationMapping implements Mapping {
 
     private final TwitterConfig twitterConfig;
     private final TwitterKeyUtil twitterKeyUtil;
 
-    public AuthenticationMappings() {
+    public AuthenticationMapping() {
         twitterConfig = new TwitterConfig();
         twitterKeyUtil = new TwitterKeyUtil();
     }
 
+    @Override
     public void register() throws MappingRegistrationException {
         registerValidAuthenticationMapping();
         registerInvalidAuthenticationMapping();
@@ -45,7 +48,7 @@ public class AuthenticationMappings {
         return aResponse().
                 withStatus(200).
                 withHeader("Content-Type", "application/json; charset=UTF-8").
-                withBody("{\"token_type\":\"bearer\",\"access_token\":\"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA%2FAAAAAAAAAAAAAAAAAAAA%3DAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\"}");
+                withBody("{\"token_type\":\"bearer\",\"access_token\":\"" + ACCESS_TOKEN + "\"}");
 
     }
 

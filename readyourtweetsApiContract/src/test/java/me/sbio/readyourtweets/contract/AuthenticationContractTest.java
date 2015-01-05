@@ -1,49 +1,29 @@
 package me.sbio.readyourtweets.contract;
 
-import com.jayway.restassured.RestAssured;
-import com.jayway.restassured.builder.RequestSpecBuilder;
-import com.jayway.restassured.specification.RequestSpecification;
+import me.sbio.readyourtweets.spec.TwitterAppAuthenticationRequestSpec;
+import me.sbio.readyourtweets.spec.TwitterRequestSpec;
 import me.sbio.readyourtweets.twitterapiclient.util.BearerTokenCreationException;
-import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
-import me.sbio.readyourtweets.twitterapiclient.util.TwitterKeyUtil;
-import org.junit.Before;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 
-public class AuthenticationContractTest {
-
-    private static final String AUTHENTICATION_PATH = "/oauth2/token";
-
-    private final TwitterConfig config;
-    private final TwitterKeyUtil twitterKeyUtil;
-
-    public AuthenticationContractTest() {
-        config = new TwitterConfig();
-        twitterKeyUtil = new TwitterKeyUtil();
-    }
-
-    @Before
-    public void setUp() {
-        RestAssured.enableLoggingOfRequestAndResponseIfValidationFails();
-        RestAssured.baseURI = config.getBaseUri();
-        RestAssured.port = config.getPort();
-        RestAssured.basePath = config.getBasePath();
-    }
+public class AuthenticationContractTest extends ContractTest {
 
     @Test
     public void shouldObtainAnAccessTokenForValidConsumerKeyAndSecret() throws BearerTokenCreationException {
-        String consumerKey = config.getConsumerKey();
-        String consumerSecret = config.getConsumerSecret();
+        String consumerKey = getTwitterConfig().getConsumerKey();
+        String consumerSecret = getTwitterConfig().getConsumerSecret();
 
-        String encodedBearerToken = twitterKeyUtil.createEncodedBearerToken(consumerKey, consumerSecret);
+        String encodedBearerToken = getTwitterKeyUtil().createEncodedBearerToken(consumerKey, consumerSecret);
+
+        TwitterRequestSpec authenticationRequestSpecification = anAuthenticationRequestSpecification(encodedBearerToken);
 
         given().
-                spec(anAuthenticationRequestSpecification(encodedBearerToken)).
+                spec(authenticationRequestSpecification.asRequestSpecification()).
         when().
-                post(AUTHENTICATION_PATH).
+                post(authenticationRequestSpecification.path()).
         then().
                 statusCode(200).
                 contentType(JSON).
@@ -54,14 +34,16 @@ public class AuthenticationContractTest {
     @Test
     public void shouldReturnForbiddenForInvalidConsumerKey() throws BearerTokenCreationException {
         String consumerKey = "INVALID_KEY";
-        String consumerSecret = config.getConsumerSecret();
+        String consumerSecret = getTwitterConfig().getConsumerSecret();
 
-        String encodedBearerToken = twitterKeyUtil.createEncodedBearerToken(consumerKey, consumerSecret);
+        String encodedBearerToken = getTwitterKeyUtil().createEncodedBearerToken(consumerKey, consumerSecret);
+
+        TwitterRequestSpec authenticationRequestSpecification = anAuthenticationRequestSpecification(encodedBearerToken);
 
         given().
-                spec(anAuthenticationRequestSpecification(encodedBearerToken)).
+                spec(authenticationRequestSpecification.asRequestSpecification()).
         when().
-                post(AUTHENTICATION_PATH).
+                post(authenticationRequestSpecification.path()).
         then().
                 statusCode(403);
 
@@ -69,25 +51,24 @@ public class AuthenticationContractTest {
 
     @Test
     public void shouldReturnForbiddenForInvalidConsumerSecret() throws BearerTokenCreationException {
-        String consumerKey = config.getConsumerKey();
+        String consumerKey = getTwitterConfig().getConsumerKey();
         String consumerSecret = "INVALID_SECRET";
 
-        String encodedBearerToken = twitterKeyUtil.createEncodedBearerToken(consumerKey, consumerSecret);
+        String encodedBearerToken = getTwitterKeyUtil().createEncodedBearerToken(consumerKey, consumerSecret);
+
+        TwitterRequestSpec authenticationRequestSpecification = anAuthenticationRequestSpecification(encodedBearerToken);
 
         given().
-                spec(anAuthenticationRequestSpecification(encodedBearerToken)).
+                spec(authenticationRequestSpecification.asRequestSpecification()).
         when().
-                post(AUTHENTICATION_PATH).
+                post(authenticationRequestSpecification.path()).
         then().
                 statusCode(403);
 
     }
 
-    private RequestSpecification anAuthenticationRequestSpecification(String encodedBearerToken) {
-        return new RequestSpecBuilder()
-                .setContentType("application/x-www-form-urlencoded;charset=UTF-8")
-                .addHeader("Authorization", "Basic " + encodedBearerToken)
-                .setBody("grant_type=client_credentials").build();
+    private TwitterRequestSpec anAuthenticationRequestSpecification(String encodedBearerToken) {
+        return new TwitterAppAuthenticationRequestSpec(encodedBearerToken);
     }
 
 }

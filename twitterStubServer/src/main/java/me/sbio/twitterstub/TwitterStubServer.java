@@ -1,20 +1,30 @@
 package me.sbio.twitterstub;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import me.sbio.twitterstub.mappings.auth.AuthenticationMapping;
+import com.github.tomakehurst.wiremock.client.WireMock;
+import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
+import me.sbio.readyourtweets.twitterapiclient.util.BearerTokenCreationException;
+import me.sbio.twitterstub.mappings.Mapping;
 import me.sbio.twitterstub.mappings.MappingRegistrationException;
-import me.sbio.twitterstub.mappings.timeline.UserTimelineMapping;
+import me.sbio.twitterstub.mappings.auth.MatchAllAuthenticationMapping;
+import me.sbio.twitterstub.mappings.auth.ValidAuthenticationMapping;
+import me.sbio.twitterstub.mappings.timeline.DefaultUserTimelineMapping;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
+import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
 public class TwitterStubServer {
 
     private final WireMockServer wireMockServer;
-    private int port;
+    private final String consumerKey;
+    private final String consumerSecret;
+    private final int port;
 
-    public TwitterStubServer(int port) {
+    public TwitterStubServer(int port, String consumerKey, String consumerSecret) {
         this.port = port;
+        this.consumerKey = consumerKey;
+        this.consumerSecret = consumerSecret;
         wireMockServer = new WireMockServer(wireMockConfig().port(port));
     }
 
@@ -22,20 +32,44 @@ public class TwitterStubServer {
         wireMockServer.start();
     }
 
-    public void registerMappings() throws MappingRegistrationException {
+    public void registerMappings(Mapping... mappings) throws MappingRegistrationException {
         configureFor("localhost", port);
-        new AuthenticationMapping().register();
-        new UserTimelineMapping().register();
+        reset();
+        for (int i=0; i<mappings.length; i++) {
+            stubFor(mappings[i].request().atPriority(i+1).willReturn(mappings[i].response()));
+        }
     }
 
     public void stop() {
         wireMockServer.stop();
     }
 
-    public static void main(String[] args) throws MappingRegistrationException {
-        TwitterStubServer twitterStubServer = new TwitterStubServer(8080);
+    public void reset() {
+        WireMock.reset();
+    }
+
+    public void registerDefaultMappings() {
+        try {
+            registerMappings(defaultMappings());
+        } catch (MappingRegistrationException | BearerTokenCreationException e) {
+            throw new IllegalStateException("Failed to register default mappings", e);
+        }
+    }
+
+    public static void main(String[] args) throws MappingRegistrationException, BearerTokenCreationException {
+        TwitterConfig twitterConfig = new TwitterConfig();
+
+        TwitterStubServer twitterStubServer = new TwitterStubServer(8080, twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
         twitterStubServer.start();
 
-        twitterStubServer.registerMappings();
+        twitterStubServer.registerDefaultMappings();
+    }
+
+    private Mapping[] defaultMappings() throws BearerTokenCreationException {
+        return new Mapping[] {
+                new ValidAuthenticationMapping(consumerKey, consumerSecret, 1),
+                new MatchAllAuthenticationMapping(),
+                new DefaultUserTimelineMapping()
+        };
     }
 }

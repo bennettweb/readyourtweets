@@ -13,9 +13,9 @@ public class StubServerListener extends RunListener {
 
     @Override
     public void testRunStarted(Description description) throws Exception {
-        twitterStubServer = new TwitterStubServer(twitterConfig.getPort());
+        twitterStubServer = new TwitterStubServer(twitterConfig.getPort(), twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
         twitterStubServer.start();
-        twitterStubServer.registerMappings();
+        twitterStubServer.registerDefaultMappings();
     }
 
     @Override

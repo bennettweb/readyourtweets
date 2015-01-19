@@ -1,22 +1,25 @@
 package me.sbio.twitterstub.mappings.auth;
 
-import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import com.github.tomakehurst.wiremock.http.RequestMethod;
+import me.sbio.twitterstub.mappings.TwitterRequest;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
-import static com.github.tomakehurst.wiremock.client.WireMock.matching;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
+import static me.sbio.twitterstub.AuthorizationTokenType.BASIC;
+import static me.sbio.twitterstub.ContentType.APPLICATION_FORM;
 
-class AuthenticationRequest extends MappingBuilder {
+class AuthenticationRequest extends TwitterRequest {
+
+    private static final String OAUTH2_TOKEN_PATH = "/oauth2/token";
 
     public AuthenticationRequest() {
-        super(RequestMethod.POST, urlEqualTo("/oauth2/token"));
-        withHeader("Content-Type", equalTo("application/x-www-form-urlencoded;charset=UTF-8"));
+        super(RequestMethod.POST, urlEqualTo(OAUTH2_TOKEN_PATH));
+        withContentType(APPLICATION_FORM);
         withRequestBody(equalTo("grant_type=client_credentials"));
     }
 
     public AuthenticationRequest withEncodedBearerTokenMatching(String encodedBearerToken) {
-        withHeader("Authorization", matching("Basic " + encodedBearerToken));
+        withAuthorizationHeader(BASIC, encodedBearerToken);
         return this;
     }
 }

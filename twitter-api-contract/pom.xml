@@ -7,10 +7,9 @@
     <groupId>me.sbio</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>me.sbio</groupId>
-  <artifactId>readyourtweetsApiContract</artifactId>
+  <artifactId>twitter-api-contract</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <name>readyourtweetsApiContract</name>
+  <name>twitter-api-contract</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,12 +26,11 @@
     </dependency>
     <dependency>
       <groupId>me.sbio</groupId>
-      <artifactId>twitterApiClient</artifactId>
+      <artifactId>twitter-api-client</artifactId>
     </dependency>
     <dependency>
       <groupId>me.sbio</groupId>
-      <artifactId>twitterStubServer</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <artifactId>twitter-stub-server</artifactId>
     </dependency>
   </dependencies>
 

@@ -21,7 +21,12 @@
     <dependencies>
       <dependency>
         <groupId>me.sbio</groupId>
-        <artifactId>twitterApiClient</artifactId>
+        <artifactId>twitter-api-client</artifactId>
+        <version>1.0-SNAPSHOT</version>
+      </dependency>
+      <dependency>
+        <groupId>me.sbio</groupId>
+        <artifactId>twitter-stub-server</artifactId>
         <version>1.0-SNAPSHOT</version>
       </dependency>
       <dependency>
@@ -80,9 +85,10 @@
   </dependencies>
 
   <modules>
-    <module>twitterApiClient</module>
-    <module>readyourtweetsApiContract</module>
-    <module>twitterStubServer</module>
+    <module>twitter-api-client</module>
+    <module>twitter-api-contract</module>
+    <module>twitter-stub-server</module>
+    <module>twitter-app</module>
   </modules>
 
   <build>

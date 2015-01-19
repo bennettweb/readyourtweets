@@ -8,18 +8,17 @@ import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
+import static org.hamcrest.core.Every.everyItem;
+import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.core.IsNull.notNullValue;
 
 public class RetrieveTweetsContactTest extends ContractTest {
 
     private static final String SCREEN_NAME = "twitterapi";
 
     @Test
-    public void shouldRetrieveTweetsForAUser() throws BearerTokenCreationException {
-        String consumerKey = getTwitterConfig().getConsumerKey();
-        String consumerSecret = getTwitterConfig().getConsumerSecret();
-
-        String encodedBearerToken = getTwitterKeyUtil().createEncodedBearerToken(consumerKey, consumerSecret);
-        String accessToken = generateAccessToken(encodedBearerToken);
+    public void shouldReturnOkStatusCodeForRetrieveTweetsRequest() throws BearerTokenCreationException {
+        String accessToken = generateAccessToken();
 
         RetrieveUserTweetsRequestSpec userTweetsRequestSpec = aRetrieveTweetRequestSpecification(accessToken, SCREEN_NAME);
 
@@ -32,7 +31,27 @@ public class RetrieveTweetsContactTest extends ContractTest {
                 contentType(JSON);
     }
 
-    private String generateAccessToken(String encodedBearerToken) {
+    @Test
+    public void shouldReturnTextForEveryTweetReturned() throws BearerTokenCreationException {
+        String accessToken = generateAccessToken();
+
+        RetrieveUserTweetsRequestSpec retrieveUserTweetsRequestSpec = aRetrieveTweetRequestSpecification(accessToken, SCREEN_NAME);
+
+        given().
+                spec(retrieveUserTweetsRequestSpec.asRequestSpecification()).
+        when().
+                get(retrieveUserTweetsRequestSpec.path()).
+        then().
+                body("text", notNullValue()).
+                body("text", everyItem(not("")));
+    }
+
+    private String generateAccessToken() throws BearerTokenCreationException {
+        String encodedBearerToken = generateEncodedBearerToken();
+        return authenticateApplication(encodedBearerToken);
+    }
+
+    private String authenticateApplication(String encodedBearerToken) {
         TwitterAppAuthenticationRequestSpec authenticationRequestSpec = new TwitterAppAuthenticationRequestSpec(encodedBearerToken);
 
         AuthenticationResponse authenticationResponse = given().
@@ -41,6 +60,13 @@ public class RetrieveTweetsContactTest extends ContractTest {
                     post(authenticationRequestSpec.path()).as(AuthenticationResponse.class);
 
         return authenticationResponse.getAccessToken();
+    }
+
+    private String generateEncodedBearerToken() throws BearerTokenCreationException {
+        String consumerKey = getTwitterConfig().getConsumerKey();
+        String consumerSecret = getTwitterConfig().getConsumerSecret();
+
+        return getTwitterKeyUtil().createEncodedBearerToken(consumerKey, consumerSecret);
     }
 
     private RetrieveUserTweetsRequestSpec aRetrieveTweetRequestSpecification(String accessToken, String screenName) {

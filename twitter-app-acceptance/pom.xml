@@ -7,20 +7,20 @@
     <groupId>me.sbio</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>twitter-api-client</artifactId>
+  <groupId>me.sbio</groupId>
+  <artifactId>twitter-app-acceptance</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <name>twitter-app-acceptance</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>commons-codec</groupId>
-      <artifactId>commons-codec</artifactId>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
 </project>

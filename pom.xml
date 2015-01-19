@@ -89,6 +89,7 @@
     <module>twitter-api-contract</module>
     <module>twitter-stub-server</module>
     <module>twitter-app</module>
+    <module>twitter-app-acceptance</module>
   </modules>
 
   <build>

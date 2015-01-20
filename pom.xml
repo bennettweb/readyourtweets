@@ -147,9 +147,9 @@
 
   <modules>
     <module>twitter-api-client</module>
-    <module>twitter-api-contract</module>
     <module>twitter-stub-server</module>
     <module>twitter-app</module>
+    <module>twitter-app-acceptance</module>
   </modules>
 
   <build>
@@ -163,7 +163,48 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+      <groupId>org.eclipse.jetty</groupId>
+        <artifactId>jetty-maven-plugin</artifactId>
+        <version>9.2.6.v20141205</version>
+        <configuration>
+          <scanIntervalSeconds>0</scanIntervalSeconds>
+          <stopPort>11079</stopPort>
+          <stopKey>STOP</stopKey>
+          <webApp>
+            <contextPath>/</contextPath>
+          </webApp>
+          <daemon>true</daemon>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>contractStubMode</id>
+      <modules>
+        <module>twitter-api-contract</module>
+      </modules>
+    </profile>
+    <profile>
+      <id>contractRealMode</id>
+      <modules>
+        <module>twitter-api-contract</module>
+      </modules>
+    </profile>
+  </profiles>
 
 </project>

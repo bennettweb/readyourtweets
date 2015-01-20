@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-public class HelloPageTest {
+public class HelloPageIT {
 
     private static final TwitterAppNavigator twitterAppNavigator = new TwitterAppNavigatorFactory().getNavigator();
 

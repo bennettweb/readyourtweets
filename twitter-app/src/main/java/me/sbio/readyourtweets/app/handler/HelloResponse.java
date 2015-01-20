@@ -1,7 +1,8 @@
 package me.sbio.readyourtweets.app.handler;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.ModelAndView;
+
+import static com.google.common.base.Strings.isNullOrEmpty;
 
 public class HelloResponse extends ModelAndView {
 
@@ -18,6 +19,6 @@ public class HelloResponse extends ModelAndView {
     }
 
     public boolean hasName() {
-        return !StringUtils.isBlank(getName());
+        return !isNullOrEmpty(getName());
     }
 }

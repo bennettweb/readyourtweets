@@ -16,9 +16,11 @@
     <commons-codec.version>1.9</commons-codec.version>
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <fest.version>1.4</fest.version>
+    <guava.version>18.0</guava.version>
     <junit.version>4.11</junit.version>
     <jstl.version>1.2</jstl.version>
     <restAssured.version>2.4.0</restAssured.version>
+    <selenium-java.version>2.44.0</selenium-java.version>
     <servlet-api.version>3.1.0</servlet-api.version>
     <spring.version>4.1.3.RELEASE</spring.version>
     <wiremock.version>1.41</wiremock.version>
@@ -73,6 +75,12 @@
         <version>${spring.version}</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>org.seleniumhq.selenium</groupId>
+        <artifactId>selenium-java</artifactId>
+        <version>${selenium-java.version}</version>
+        <scope>test</scope>
+      </dependency>
       <!-- 3rd party dependencies -->
       <dependency>
         <groupId>com.github.tomakehurst</groupId>
@@ -80,9 +88,9 @@
         <version>1.41</version>
       </dependency>
       <dependency>
-        <groupId>org.apache.commons</groupId>
-        <artifactId>commons-lang3</artifactId>
-        <version>3.3.2</version>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${guava.version}</version>
       </dependency>
       <dependency>
         <groupId>org.springframework</groupId>
@@ -142,7 +150,6 @@
     <module>twitter-api-contract</module>
     <module>twitter-stub-server</module>
     <module>twitter-app</module>
-    <module>twitter-app-acceptance</module>
   </modules>
 
   <build>

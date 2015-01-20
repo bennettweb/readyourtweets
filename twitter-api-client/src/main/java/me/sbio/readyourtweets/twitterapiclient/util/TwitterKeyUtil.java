@@ -1,19 +1,20 @@
 package me.sbio.readyourtweets.twitterapiclient.util;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 public class TwitterKeyUtil {
 
     public String createEncodedBearerToken(String consumerKey, String consumerSecret) throws BearerTokenCreationException {
-        if (StringUtils.isBlank(consumerKey)) {
+        if (isNullOrEmpty(consumerKey)) {
             throw new IllegalArgumentException("ConsumerKey is not set");
         }
 
-        if (StringUtils.isBlank(consumerSecret)) {
+        if (isNullOrEmpty(consumerSecret)) {
             throw new IllegalArgumentException("ConsumerSecret is not set");
         }
 

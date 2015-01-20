@@ -59,7 +59,7 @@ public class TwitterStubServer {
     public static void main(String[] args) throws MappingRegistrationException, BearerTokenCreationException {
         TwitterConfig twitterConfig = new TwitterConfig();
 
-        TwitterStubServer twitterStubServer = new TwitterStubServer(8080, twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
+        TwitterStubServer twitterStubServer = new TwitterStubServer(twitterConfig.getPort(), twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
         twitterStubServer.start();
 
         twitterStubServer.registerDefaultMappings();

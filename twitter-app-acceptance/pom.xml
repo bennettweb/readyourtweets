@@ -30,10 +30,26 @@
       <artifactId>selenium-java</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>me.sbio</groupId>
+      <artifactId>twitter-stub-server</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <twitter.baseUri>http://localhost</twitter.baseUri>
+            <twitter.port>8888</twitter.port>
+            <twitter.consumerKey>MY_SPECIAL_CONSUMER_KEY</twitter.consumerKey>
+            <twitter.consumerSecret>MY_SPECIAL_CONSUMER_SECRET</twitter.consumerSecret>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
       <plugin>
         <groupId>org.eclipse.jetty</groupId>
         <artifactId>jetty-maven-plugin</artifactId>

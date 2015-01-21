@@ -9,4 +9,5 @@ public class TwitterAcceptanceTestConfig {
     public String getAppUrl() {
         return System.getProperty(PROPERTY_BASE_URL, DEFAULT_BASE_URL);
     }
+
 }

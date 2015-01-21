@@ -48,6 +48,10 @@ public class TwitterStubServer {
         WireMock.reset();
     }
 
+    public boolean isRunning() {
+        return wireMockServer.isRunning();
+    }
+
     public void registerDefaultMappings() {
         try {
             registerMappings(defaultMappings());

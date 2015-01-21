@@ -13,6 +13,6 @@ public class DefaultUserTimelineMapping implements Mapping {
 
     @Override
     public ResponseDefinitionBuilder response() {
-        return new UserTimelineResponse("retrieve_tweets_response.json");
+        return new FileBasedUserTimelineResponse("retrieve_tweets_response.json");
     }
 }

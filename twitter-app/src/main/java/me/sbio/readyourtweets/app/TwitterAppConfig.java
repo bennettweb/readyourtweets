@@ -1,5 +1,6 @@
 package me.sbio.readyourtweets.app;
 
+import me.sbio.readyourtweets.twitterapiclient.TwitterApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,13 @@ public class TwitterAppConfig extends WebMvcConfigurerAdapter {
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+
+    @Bean
+    public TwitterApi twitterApi() {
+        TwitterApi twitterApi = new TwitterApi();
+        twitterApi.authenticate();
+        return twitterApi;
     }
 
     @Bean(name = "messageSource")

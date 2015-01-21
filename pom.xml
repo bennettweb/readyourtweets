@@ -19,6 +19,7 @@
     <guava.version>18.0</guava.version>
     <junit.version>4.11</junit.version>
     <jstl.version>1.2</jstl.version>
+    <mockito.version>1.10.17</mockito.version>
     <restAssured.version>2.4.0</restAssured.version>
     <selenium-java.version>2.44.0</selenium-java.version>
     <servlet-api.version>3.1.0</servlet-api.version>
@@ -50,6 +51,12 @@
         <groupId>org.easytesting</groupId>
         <artifactId>fest-assert</artifactId>
         <version>${fest.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${mockito.version}</version>
         <scope>test</scope>
       </dependency>
       <dependency>

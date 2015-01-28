@@ -1,6 +1,6 @@
 package me.sbio.readyourtweets.listener;
 
-import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
+import me.sbio.readyourtweets.commons.config.TwitterConfig;
 import me.sbio.twitterstub.TwitterStubServer;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
@@ -13,9 +13,9 @@ public class StubServerListener extends RunListener {
 
     @Override
     public void testRunStarted(Description description) throws Exception {
-        twitterStubServer = new TwitterStubServer(twitterConfig.getPort(), twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
+        twitterStubServer = new TwitterStubServer(twitterConfig.getPort());
         twitterStubServer.start();
-        twitterStubServer.registerDefaultMappings();
+        twitterStubServer.registerDefaultMappings(twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
     }
 
     @Override

@@ -1,10 +1,10 @@
 package me.sbio.readyourtweets;
 
 import com.google.common.collect.Lists;
+import me.sbio.readyourtweets.commons.config.TwitterConfig;
+import me.sbio.readyourtweets.commons.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.domain.TwitterUserFixture;
 import me.sbio.readyourtweets.pages.TweetPage;
-import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
-import me.sbio.readyourtweets.twitterapiclient.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.ui.TwitterAppNavigator;
 import me.sbio.readyourtweets.ui.TwitterAppNavigatorFactory;
 import me.sbio.twitterstub.TwitterStubServer;
@@ -34,9 +34,7 @@ public class ViewTweetsIT {
     private static TwitterStubServer initialiseTwitterStubServer() throws BearerTokenCreationException, MappingRegistrationException {
         TwitterConfig twitterConfig = new TwitterConfig();
         TwitterStubServer twitterStubServer = new TwitterStubServer(
-                twitterConfig.getPort(),
-                twitterConfig.getConsumerKey(),
-                twitterConfig.getConsumerSecret()
+                twitterConfig.getPort()
         );
         twitterStubServer.start();
         twitterStubServer.registerMappings(
@@ -67,6 +65,6 @@ public class ViewTweetsIT {
     }
 
     private List<String> aListOfTweets() {
-        return Lists.newArrayList("Tweet 1", "Tweet 2", "Tweet 3");
+        return Lists.newArrayList("Special Tweet 1", "Special Tweet 2", "Special Tweet 3");
     }
 }

@@ -1,6 +1,6 @@
 package me.sbio.readyourtweets;
 
-import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
+import me.sbio.readyourtweets.commons.config.TwitterConfig;
 import me.sbio.twitterstub.TwitterStubServer;
 
 public class TwitterStubServerWrapper {
@@ -12,9 +12,7 @@ public class TwitterStubServerWrapper {
 
     private TwitterStubServerWrapper() {
         this.twitterStubServer = new TwitterStubServer(
-                TWITTER_CONFIG.getPort(),
-                TWITTER_CONFIG.getConsumerKey(),
-                TWITTER_CONFIG.getConsumerSecret()
+                TWITTER_CONFIG.getPort()
         );
     }
 

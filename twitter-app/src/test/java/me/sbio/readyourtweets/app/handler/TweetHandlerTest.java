@@ -1,6 +1,7 @@
 package me.sbio.readyourtweets.app.handler;
 
 import com.google.common.collect.Lists;
+import me.sbio.readyourtweets.commons.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.twitterapiclient.TwitterApi;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class TweetHandlerTest {
 
+    private static final String USER = "sb_io";
     private TweetHandler tweetHandler;
 
     @Mock
@@ -28,11 +30,11 @@ public class TweetHandlerTest {
     }
 
     @Test
-    public void shouldReturnTweetsResponse() {
+    public void shouldReturnTweetsResponse() throws BearerTokenCreationException {
         List<String> tweets = Lists.newArrayList("Tweet 1", "Tweet 2", "Tweet 3");
-        when(mockTwitterApi.userTimeline(anyString())).thenReturn(tweets);
+        when(mockTwitterApi.userTimeline(USER)).thenReturn(tweets);
 
-        ListTweetsResponse listTweetsResponse = tweetHandler.readTweets();
+        ListTweetsResponse listTweetsResponse = tweetHandler.readTweets(USER);
         assertThat(listTweetsResponse.getTweets()).containsOnly(tweets.toArray());
     }
 }

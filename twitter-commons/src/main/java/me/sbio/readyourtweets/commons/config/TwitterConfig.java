@@ -1,4 +1,4 @@
-package me.sbio.readyourtweets.twitterapiclient.config;
+package me.sbio.readyourtweets.commons.config;
 
 public class TwitterConfig {
 

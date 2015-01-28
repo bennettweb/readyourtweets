@@ -45,12 +45,6 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>2.18.1</version>
             <configuration>
-              <systemPropertyVariables>
-                <twitter.baseUri>http://localhost</twitter.baseUri>
-                <twitter.port>8888</twitter.port>
-                <twitter.consumerKey>MY_SPECIAL_CONSUMER_KEY</twitter.consumerKey>
-                <twitter.consumerSecret>MY_SPECIAL_CONSUMER_SECRET</twitter.consumerSecret>
-              </systemPropertyVariables>
               <properties>
                 <property>
                   <name>listener</name>

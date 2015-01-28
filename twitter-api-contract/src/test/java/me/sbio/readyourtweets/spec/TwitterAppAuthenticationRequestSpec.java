@@ -11,7 +11,7 @@ public class TwitterAppAuthenticationRequestSpec implements TwitterRequestSpec {
 
     public TwitterAppAuthenticationRequestSpec(String encodedBearerToken) {
         requestSpecBuilder = new RequestSpecBuilder()
-                .setContentType("application/x-www-form-urlencoded;charset=UTF-8")
+                .setContentType("application/x-www-form-urlencoded; charset=UTF-8")
                 .addHeader("Authorization", "Basic " + encodedBearerToken)
                 .setBody("grant_type=client_credentials");
     }

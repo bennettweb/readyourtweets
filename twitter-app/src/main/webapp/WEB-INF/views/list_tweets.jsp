@@ -8,9 +8,9 @@
 <body>
 <h2><spring:message code="tweets.header" /></h2>
 <ul class="tweets">
-    <li>Tweet 1</li>
-    <li>Tweet 2</li>
-    <li>Tweet 3</li>
+    <c:forEach items="${tweets}" var="tweet">
+        <li>${tweet}</li>
+    </c:forEach>
 </ul>
 </body>
 </html>

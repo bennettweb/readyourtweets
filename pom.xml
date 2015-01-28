@@ -17,6 +17,7 @@
     <commons-lang3.version>3.3.2</commons-lang3.version>
     <fest.version>1.4</fest.version>
     <guava.version>18.0</guava.version>
+    <jersey-client.version>2.14</jersey-client.version>
     <junit.version>4.11</junit.version>
     <jstl.version>1.2</jstl.version>
     <mockito.version>1.10.17</mockito.version>
@@ -38,6 +39,11 @@
       <dependency>
         <groupId>me.sbio</groupId>
         <artifactId>twitter-stub-server</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>me.sbio</groupId>
+        <artifactId>twitter-commons</artifactId>
         <version>${project.version}</version>
       </dependency>
       <!-- Test scope dependencies -->
@@ -124,6 +130,11 @@
         <artifactId>spring-web</artifactId>
         <version>${spring.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.glassfish.jersey.core</groupId>
+        <artifactId>jersey-client</artifactId>
+        <version>${jersey-client.version}</version>
+      </dependency>
       <!-- container provided dependencies -->
       <dependency>
         <groupId>javax.servlet</groupId>
@@ -153,6 +164,7 @@
   </dependencies>
 
   <modules>
+    <module>twitter-commons</module>
     <module>twitter-api-client</module>
     <module>twitter-stub-server</module>
     <module>twitter-app</module>
@@ -179,6 +191,14 @@
               <goal>integration-test</goal>
               <goal>verify</goal>
             </goals>
+            <configuration>
+              <systemProperties>
+                <twitter.baseUri>http://localhost</twitter.baseUri>
+                <twitter.port>8888</twitter.port>
+                <twitter.consumerKey>MY_CONSUMER_KEY</twitter.consumerKey>
+                <twitter.consumerSecret>MY_CONSUMER_SECRET</twitter.consumerSecret>
+              </systemProperties>
+            </configuration>
           </execution>
         </executions>
       </plugin>
@@ -190,6 +210,24 @@
           <scanIntervalSeconds>0</scanIntervalSeconds>
           <stopPort>11079</stopPort>
           <stopKey>STOP</stopKey>
+          <systemProperties>
+            <systemProperty>
+              <name>twitter.baseUri</name>
+              <value>http://localhost</value>
+            </systemProperty>
+            <systemProperty>
+              <name>twitter.port</name>
+              <value>8888</value>
+            </systemProperty>
+            <systemProperty>
+              <name>twitter.consumerKey</name>
+              <value>MY_CONSUMER_KEY</value>
+            </systemProperty>
+            <systemProperty>
+              <name>twitter.consumerSecret</name>
+              <value>MY_CONSUMER_SECRET</value>
+            </systemProperty>
+          </systemProperties>
           <webApp>
             <contextPath>/</contextPath>
           </webApp>

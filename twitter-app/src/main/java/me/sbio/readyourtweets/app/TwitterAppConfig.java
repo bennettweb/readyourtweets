@@ -1,5 +1,7 @@
 package me.sbio.readyourtweets.app;
 
+import me.sbio.readyourtweets.commons.config.TwitterConfig;
+import me.sbio.readyourtweets.commons.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.twitterapiclient.TwitterApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -10,6 +12,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import javax.inject.Inject;
 
 @Configuration
 @ComponentScan("me.sbio.readyourtweets.app")
@@ -35,9 +39,14 @@ public class TwitterAppConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public TwitterApi twitterApi() {
-        TwitterApi twitterApi = new TwitterApi();
-        twitterApi.authenticate();
+    public TwitterConfig twitterConfig() {
+        return new TwitterConfig();
+    }
+
+    @Inject
+    @Bean
+    public TwitterApi twitterApi(TwitterConfig twitterConfig) throws BearerTokenCreationException {
+        TwitterApi twitterApi = new TwitterApi(twitterConfig);
         return twitterApi;
     }
 

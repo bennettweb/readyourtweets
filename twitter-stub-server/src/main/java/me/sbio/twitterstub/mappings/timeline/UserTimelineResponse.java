@@ -11,6 +11,10 @@ import static com.google.common.io.ByteStreams.toByteArray;
 
 class UserTimelineResponse extends ResponseDefinitionBuilder {
 
+    public UserTimelineResponse() {
+        withHeader("Content-Type", "application/json");
+    }
+
     public UserTimelineResponse withTweets(List<String> textForTweets) {
         List<String> formattedTweets = Lists.newLinkedList();
 

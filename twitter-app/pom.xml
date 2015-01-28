@@ -18,6 +18,11 @@
       <artifactId>twitter-api-client</artifactId>
     </dependency>
     <dependency>
+      <groupId>me.sbio</groupId>
+      <artifactId>twitter-stub-server</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>

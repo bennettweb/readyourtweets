@@ -1,8 +1,8 @@
 package me.sbio.readyourtweets.contract;
 
+import me.sbio.readyourtweets.commons.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.spec.TwitterAppAuthenticationRequestSpec;
 import me.sbio.readyourtweets.spec.TwitterRequestSpec;
-import me.sbio.readyourtweets.twitterapiclient.util.BearerTokenCreationException;
 import org.junit.Test;
 
 import static com.jayway.restassured.RestAssured.given;

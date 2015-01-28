@@ -1,4 +1,4 @@
-package me.sbio.readyourtweets;
+package me.sbio.readyourtweets.twitterapiclient.resource.auth;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,8 +1,8 @@
 package me.sbio.readyourtweets.contract;
 
 import com.jayway.restassured.RestAssured;
-import me.sbio.readyourtweets.twitterapiclient.config.TwitterConfig;
-import me.sbio.readyourtweets.twitterapiclient.util.TwitterKeyUtil;
+import me.sbio.readyourtweets.commons.config.TwitterConfig;
+import me.sbio.readyourtweets.commons.util.TwitterKeyUtil;
 import org.junit.Before;
 
 public abstract class ContractTest {

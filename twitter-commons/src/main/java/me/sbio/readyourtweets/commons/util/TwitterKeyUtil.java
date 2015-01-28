@@ -1,4 +1,4 @@
-package me.sbio.readyourtweets.twitterapiclient.util;
+package me.sbio.readyourtweets.commons.util;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
+
 
 public class TwitterKeyUtil {
 

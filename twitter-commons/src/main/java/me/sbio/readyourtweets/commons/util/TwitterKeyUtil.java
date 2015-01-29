@@ -20,19 +20,29 @@ public class TwitterKeyUtil {
         }
 
         // 1. Encode the keys using RFC 1738
-        String encodedConsumerKey = null;
-        String encodedConsumerSecret = null;
+        String encodedConsumerKey = encodeKey(consumerKey);
+        String encodedConsumerSecret = encodeKey(consumerSecret);
+
+        // 2. Concatenate using a ':'
+        String bearerTokenCredentials = createCredentials(encodedConsumerKey, encodedConsumerSecret);
+
+        // 3. Base 64 encode
+        return base64Encode(bearerTokenCredentials);
+    }
+
+    private String encodeKey(String key) throws BearerTokenCreationException {
         try {
-            encodedConsumerKey = URLEncoder.encode(consumerKey, "UTF-8");
-            encodedConsumerSecret = URLEncoder.encode(consumerSecret, "UTF-8");
+            return URLEncoder.encode(key, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             throw new BearerTokenCreationException("Failed to encode key", e);
         }
+    }
 
-        // 2. Concatenate using a ':'
-        String bearerTokenCredentials = encodedConsumerKey + ":" + encodedConsumerSecret;
+    private String createCredentials(String encodedConsumerKey, String encodedConsumerSecret) {
+        return encodedConsumerKey + ":" + encodedConsumerSecret;
+    }
 
-        // 3. Base 64 encode
+    private String base64Encode(String bearerTokenCredentials) {
         byte[] encodedBearerCredentials = Base64.encodeBase64(bearerTokenCredentials.getBytes());
         return new String(encodedBearerCredentials);
     }

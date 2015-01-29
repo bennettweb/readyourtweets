@@ -18,32 +18,37 @@ public class RequestFactory {
     private final TwitterConfig twitterConfig;
     private final TwitterKeyUtil twitterKeyUtil;
     private final EntityFactory entityFactory;
-    private final Client client;
+
     private WebTarget baseWebTarget;
 
     public RequestFactory(TwitterConfig twitterConfig, TwitterKeyUtil twitterKeyUtil, EntityFactory entityFactory) {
         this.twitterConfig = twitterConfig;
         this.twitterKeyUtil = twitterKeyUtil;
         this.entityFactory = entityFactory;
-        ClientConfig clientConfig = new ClientConfig();
-        client = ClientBuilder.newClient(clientConfig);
-        client.register(JacksonFeature.class);
-        baseWebTarget = client.target(twitterConfig.getBaseUri() + ":" + twitterConfig.getPort());
+        this.baseWebTarget = createBaseWebTarget(twitterConfig);
     }
 
     public RequestFactory(TwitterConfig twitterConfig) {
         this(twitterConfig, new TwitterKeyUtil(), new EntityFactory());
     }
 
+    private WebTarget createBaseWebTarget(TwitterConfig twitterConfig) {
+        ClientConfig clientConfig = new ClientConfig();
+        Client client = ClientBuilder.newClient(clientConfig);
+        client.register(JacksonFeature.class);
+        return client.target(twitterConfig.getBaseUri() + ":" + twitterConfig.getPort());
+    }
+
     public AuthenticationRequest authenticateRequest() throws BearerTokenCreationException {
-        String encodedBearerToken = twitterKeyUtil.createEncodedBearerToken(
-                twitterConfig.getConsumerKey(),
-                twitterConfig.getConsumerSecret()
-        );
+        String encodedBearerToken = getEncodedBearerToken();
         return new AuthenticationRequest(baseWebTarget, entityFactory, encodedBearerToken);
     }
 
     public UserTimelineRequest userTimelineRequest(String accessToken, String user) {
         return new UserTimelineRequest(baseWebTarget, accessToken, user);
+    }
+
+    private String getEncodedBearerToken() throws BearerTokenCreationException {
+        return twitterKeyUtil.createEncodedBearerToken(twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
     }
 }

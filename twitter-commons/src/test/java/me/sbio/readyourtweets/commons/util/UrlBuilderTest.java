@@ -1,29 +1,30 @@
-package me.sbio.readyourtweets;
+package me.sbio.readyourtweets.commons.util;
 
+import me.sbio.readyourtweets.commons.util.UrlBuilder;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 public class UrlBuilderTest {
 
-    private static final String BASE_URL = "http://localhost:8080";
+    private static final String BASE_URL = "http://localhost";
 
     @Test
     public void shouldCreateAUrlWithoutSegments() {
-        String url = new UrlBuilder("http://localhost:8080/").build();
-        assertThat(url).isEqualTo("http://localhost:8080/");
+        String url = new UrlBuilder("http://localhost/").build();
+        assertThat(url).isEqualTo("http://localhost/");
     }
 
     @Test
     public void shouldCreateAUrlWithoutSegmentsAddingTrailingSlash() {
         String url = new UrlBuilder(BASE_URL).build();
-        assertThat(url).isEqualTo("http://localhost:8080/");
+        assertThat(url).isEqualTo("http://localhost");
     }
 
     @Test
     public void shouldCreateAUrlWithSingleSegment() {
         String url = new UrlBuilder(BASE_URL).withPathSegment("hello").build();
-        assertThat(url).isEqualTo("http://localhost:8080/hello");
+        assertThat(url).isEqualTo("http://localhost/hello");
     }
 
     @Test
@@ -33,7 +34,7 @@ public class UrlBuilderTest {
                 withPathSegment("cruel").
                 withPathSegment("world").build();
 
-        assertThat(url).isEqualTo("http://localhost:8080/hello/cruel/world");
+        assertThat(url).isEqualTo("http://localhost/hello/cruel/world");
     }
 
     @Test
@@ -43,7 +44,7 @@ public class UrlBuilderTest {
                 withPathSegment("cruel").
                 withPathSegment("/world").build();
 
-        assertThat(url).isEqualTo("http://localhost:8080/hello/cruel/world");
+        assertThat(url).isEqualTo("http://localhost/hello/cruel/world");
     }
 
     @Test
@@ -52,7 +53,7 @@ public class UrlBuilderTest {
                 withPathSegment("hello").
                 withParameter("name", "sbio").build();
 
-        assertThat(url).isEqualTo("http://localhost:8080/hello?name=sbio");
+        assertThat(url).isEqualTo("http://localhost/hello?name=sbio");
     }
 
     @Test
@@ -62,7 +63,7 @@ public class UrlBuilderTest {
                 withParameter("name", "twitter").
                 withParameter("name", "sbio").build();
 
-        assertThat(url).isEqualTo("http://localhost:8080/hello?name=sbio");
+        assertThat(url).isEqualTo("http://localhost/hello?name=sbio");
     }
 
     @Test
@@ -72,7 +73,14 @@ public class UrlBuilderTest {
                 withParameter("count", "2").
                 withParameter("name", "sbio").build();
 
-        assertThat(url).isEqualTo("http://localhost:8080/hello?count=2&name=sbio");
+        assertThat(url).isEqualTo("http://localhost/hello?count=2&name=sbio");
+    }
+
+    @Test
+    public void shouldCreateAUrlAppendingPort() {
+        String url = new UrlBuilder(BASE_URL).withPort(8888).build();
+
+        assertThat(url).isEqualTo("http://localhost:8888");
     }
 
 }

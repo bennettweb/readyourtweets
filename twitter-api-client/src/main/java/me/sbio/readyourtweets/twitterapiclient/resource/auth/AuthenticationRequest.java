@@ -8,7 +8,7 @@ import javax.ws.rs.client.WebTarget;
 
 public class AuthenticationRequest {
 
-    private static final String OAUTH_PATH = "/oauth2/token";
+    private static final String OAUTH_PATH = "oauth2/token";
     private static final String AUTHORIZATION_HEADER_KEY = "Authorization";
     private static final String AUTHORIZATION_HEADER_VALUE_FORMAT = "Basic %s";
 

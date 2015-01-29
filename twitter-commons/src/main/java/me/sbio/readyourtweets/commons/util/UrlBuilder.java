@@ -1,4 +1,4 @@
-package me.sbio.readyourtweets;
+package me.sbio.readyourtweets.commons.util;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
@@ -12,11 +12,13 @@ public class UrlBuilder {
     private String baseUrl;
     private LinkedList<String> segments;
     private Map<String, String> parameters;
+    private int port;
 
     public UrlBuilder(String baseUrl) {
         this.segments = Lists.newLinkedList();
         this.parameters = Maps.newHashMap();
         this.baseUrl = baseUrl;
+        this.port = -1;
     }
 
     public UrlBuilder withPathSegment(String segment) {
@@ -33,11 +35,18 @@ public class UrlBuilder {
         StringBuilder buffer = new StringBuilder();
         buffer.append(baseUrl);
 
-        if (!buffer.toString().endsWith("/")) {
+        if (port > 0) {
+            buffer.append(":").append(port);
+        }
+
+        if (!buffer.toString().endsWith("/") && segments.size() > 0) {
             buffer.append("/");
         }
 
-        buffer.append(path(segments));
+        String path = path(segments);
+        if (!path.equals("/")) {
+            buffer.append(path);
+        }
         buffer.append(queryString(parameters));
 
         return buffer.toString();
@@ -55,4 +64,8 @@ public class UrlBuilder {
         return Joiner.on("/").skipNulls().join(segments).replaceAll("//", "/");
     }
 
+    public UrlBuilder withPort(int port) {
+        this.port = port;
+        return this;
+    }
 }

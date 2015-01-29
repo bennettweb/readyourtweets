@@ -23,7 +23,7 @@ public class AuthenticationRequestTest {
 
     private static final String ENCODED_BEARER_TOKEN = "TWITTER_ENCODED_TOKEN";
     private static final Entity<String> ENTITY = Entity.entity("entity", APPLICATION_FORM_URLENCODED_TYPE);
-    private static final String OAUTH_TOKEN_PATH = "/oauth2/token";
+    private static final String OAUTH_TOKEN_PATH = "oauth2/token";
 
 
     @Mock

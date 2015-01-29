@@ -1,7 +1,7 @@
 package me.sbio.readyourtweets.ui;
 
 import me.sbio.readyourtweets.TwitterAcceptanceTestConfig;
-import me.sbio.readyourtweets.UrlBuilder;
+import me.sbio.readyourtweets.commons.util.UrlBuilder;
 import me.sbio.readyourtweets.pages.TweetPage;
 import org.openqa.selenium.WebDriver;
 

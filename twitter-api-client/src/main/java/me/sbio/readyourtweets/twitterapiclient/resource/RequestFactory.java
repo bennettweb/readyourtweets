@@ -3,9 +3,11 @@ package me.sbio.readyourtweets.twitterapiclient.resource;
 import me.sbio.readyourtweets.commons.config.TwitterConfig;
 import me.sbio.readyourtweets.commons.util.BearerTokenCreationException;
 import me.sbio.readyourtweets.commons.util.TwitterKeyUtil;
+import me.sbio.readyourtweets.commons.util.UrlBuilder;
 import me.sbio.readyourtweets.twitterapiclient.resource.auth.AuthenticationRequest;
 import me.sbio.readyourtweets.twitterapiclient.resource.timeline.UserTimelineRequest;
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.Client;
@@ -25,18 +27,27 @@ public class RequestFactory {
         this.twitterConfig = twitterConfig;
         this.twitterKeyUtil = twitterKeyUtil;
         this.entityFactory = entityFactory;
-        this.baseWebTarget = createBaseWebTarget(twitterConfig);
+        String twitterApiUrl = buildTwitterApiUrl(twitterConfig);
+        this.baseWebTarget = createBaseWebTarget(twitterApiUrl);
+    }
+
+    private String buildTwitterApiUrl(TwitterConfig twitterConfig) {
+        UrlBuilder urlBuilder = new UrlBuilder(twitterConfig.getBaseUri());
+        urlBuilder.withPort(twitterConfig.getPort());
+        urlBuilder.withPathSegment(twitterConfig.getBasePath());
+        return urlBuilder.build();
     }
 
     public RequestFactory(TwitterConfig twitterConfig) {
         this(twitterConfig, new TwitterKeyUtil(), new EntityFactory());
     }
 
-    private WebTarget createBaseWebTarget(TwitterConfig twitterConfig) {
+    private WebTarget createBaseWebTarget(String twitterApiUrl) {
         ClientConfig clientConfig = new ClientConfig();
         Client client = ClientBuilder.newClient(clientConfig);
         client.register(JacksonFeature.class);
-        return client.target(twitterConfig.getBaseUri() + ":" + twitterConfig.getPort());
+        client.register(LoggingFilter.class);
+        return client.target(twitterApiUrl);
     }
 
     public AuthenticationRequest authenticateRequest() throws BearerTokenCreationException {

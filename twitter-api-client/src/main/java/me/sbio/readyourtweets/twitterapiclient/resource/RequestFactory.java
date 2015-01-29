@@ -6,13 +6,11 @@ import me.sbio.readyourtweets.commons.util.TwitterKeyUtil;
 import me.sbio.readyourtweets.twitterapiclient.resource.auth.AuthenticationRequest;
 import me.sbio.readyourtweets.twitterapiclient.resource.timeline.UserTimelineRequest;
 import org.glassfish.jersey.client.ClientConfig;
-import org.glassfish.jersey.filter.LoggingFilter;
 import org.glassfish.jersey.jackson.JacksonFeature;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import java.util.logging.Logger;
 
 
 public class RequestFactory {
@@ -29,7 +27,6 @@ public class RequestFactory {
         this.entityFactory = entityFactory;
         ClientConfig clientConfig = new ClientConfig();
         client = ClientBuilder.newClient(clientConfig);
-        client.register(new LoggingFilter(Logger.getLogger("restapi"), true));
         client.register(JacksonFeature.class);
         baseWebTarget = client.target(twitterConfig.getBaseUri() + ":" + twitterConfig.getPort());
     }

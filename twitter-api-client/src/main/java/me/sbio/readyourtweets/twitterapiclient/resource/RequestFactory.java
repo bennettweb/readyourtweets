@@ -27,15 +27,7 @@ public class RequestFactory {
         this.twitterConfig = twitterConfig;
         this.twitterKeyUtil = twitterKeyUtil;
         this.entityFactory = entityFactory;
-        String twitterApiUrl = buildTwitterApiUrl(twitterConfig);
-        this.baseWebTarget = createBaseWebTarget(twitterApiUrl);
-    }
-
-    private String buildTwitterApiUrl(TwitterConfig twitterConfig) {
-        UrlBuilder urlBuilder = new UrlBuilder(twitterConfig.getBaseUri());
-        urlBuilder.withPort(twitterConfig.getPort());
-        urlBuilder.withPathSegment(twitterConfig.getBasePath());
-        return urlBuilder.build();
+        this.baseWebTarget = createBaseWebTarget(twitterConfig.apiUri());
     }
 
     public RequestFactory(TwitterConfig twitterConfig) {

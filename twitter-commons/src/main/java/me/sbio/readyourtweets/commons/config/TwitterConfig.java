@@ -1,5 +1,7 @@
 package me.sbio.readyourtweets.commons.config;
 
+import me.sbio.readyourtweets.commons.util.UrlBuilder;
+
 public class TwitterConfig {
 
     private static final String DEFAULT_BASE_URI = "https://api.twitter.com";
@@ -24,5 +26,12 @@ public class TwitterConfig {
 
     public String getBasePath() {
         return System.getProperty("twitter.basePath", DEFAULT_BASE_PATH);
+    }
+
+    public String apiUri() {
+        UrlBuilder urlBuilder = new UrlBuilder(getBaseUri());
+        urlBuilder.withPort(getPort());
+        urlBuilder.withPathSegment(getBasePath());
+        return urlBuilder.build();
     }
 }

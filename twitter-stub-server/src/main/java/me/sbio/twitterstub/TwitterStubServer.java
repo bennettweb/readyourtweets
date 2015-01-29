@@ -65,7 +65,7 @@ public class TwitterStubServer {
         twitterStubServer.registerDefaultMappings(twitterConfig.getConsumerKey(), twitterConfig.getConsumerSecret());
     }
 
-    private Mapping[] defaultMappings() throws BearerTokenCreationException {
+    public static Mapping[] defaultMappings() throws BearerTokenCreationException {
         return new Mapping[] {
                 new DefaultUserTimelineMapping()
         };

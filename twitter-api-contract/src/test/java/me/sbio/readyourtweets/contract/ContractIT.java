@@ -5,12 +5,12 @@ import me.sbio.readyourtweets.commons.config.TwitterConfig;
 import me.sbio.readyourtweets.commons.util.TwitterKeyUtil;
 import org.junit.Before;
 
-public abstract class ContractTest {
+public abstract class ContractIT {
 
     private final TwitterConfig twitterConfig;
     private final TwitterKeyUtil twitterKeyUtil;
 
-    public ContractTest() {
+    public ContractIT() {
         twitterConfig = new TwitterConfig();
         twitterKeyUtil = new TwitterKeyUtil();
     }

@@ -12,7 +12,7 @@ import static org.hamcrest.core.Every.everyItem;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 
-public class RetrieveTweetsContactTest extends ContractTest {
+public class RetrieveTweetsContactIT extends ContractIT {
 
     private static final String SCREEN_NAME = "twitterapi";
 

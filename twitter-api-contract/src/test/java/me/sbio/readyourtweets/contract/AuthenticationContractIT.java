@@ -9,7 +9,7 @@ import static com.jayway.restassured.RestAssured.given;
 import static com.jayway.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.*;
 
-public class AuthenticationContractTest extends ContractTest {
+public class AuthenticationContractIT extends ContractIT {
 
     @Test
     public void shouldObtainAnAccessTokenForValidConsumerKeyAndSecret() throws BearerTokenCreationException {

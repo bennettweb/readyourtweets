@@ -52,6 +52,17 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <configuration>
+          <systemProperties>
+            <twitter.baseUri>${twitter.stub.baseUri}</twitter.baseUri>
+            <twitter.port>${twitter.stub.port}</twitter.port>
+            <twitter.consumerKey>${twitter.stub.consumerKey}</twitter.consumerKey>
+            <twitter.consumerSecret>${twitter.stub.consumerSecret}</twitter.consumerSecret>
+          </systemProperties>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

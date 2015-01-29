@@ -37,13 +37,10 @@
   <profiles>
     <profile>
       <id>contractStubMode</id>
-      <properties>
-      </properties>
       <build>
         <plugins>
           <plugin>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.18.1</version>
+            <artifactId>maven-failsafe-plugin</artifactId>
             <configuration>
               <properties>
                 <property>
@@ -51,6 +48,30 @@
                   <value>me.sbio.readyourtweets.listener.StubServerListener</value>
                 </property>
               </properties>
+              <systemProperties>
+                <twitter.baseUri>${twitter.stub.baseUri}</twitter.baseUri>
+                <twitter.port>${twitter.stub.port}</twitter.port>
+                <twitter.consumerKey>${twitter.stub.consumerKey}</twitter.consumerKey>
+                <twitter.consumerSecret>${twitter.stub.consumerSecret}</twitter.consumerSecret>
+              </systemProperties>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>contractRealMode</id>
+      <build>
+        <plugins>
+          <plugin>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <configuration>
+              <systemProperties>
+                <twitter.baseUri>${twitter.real.baseUri}</twitter.baseUri>
+                <twitter.port>${twitter.real.port}</twitter.port>
+                <twitter.consumerKey>${twitter.real.consumerKey}</twitter.consumerKey>
+                <twitter.consumerSecret>${twitter.real.consumerSecret}</twitter.consumerSecret>
+              </systemProperties>
             </configuration>
           </plugin>
         </plugins>

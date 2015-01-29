@@ -24,4 +24,8 @@ public class TwitterUserFixture {
     public List<String> getTweets() {
         return tweets;
     }
+
+    public static TwitterUserFixture aTwitterUser(String name) {
+        return new TwitterUserFixture().withScreenname(name);
+    }
 }

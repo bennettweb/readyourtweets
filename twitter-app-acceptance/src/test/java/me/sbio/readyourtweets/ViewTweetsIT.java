@@ -16,6 +16,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import static me.sbio.readyourtweets.domain.TwitterUserFixture.aTwitterUser;
 import static org.fest.assertions.Assertions.assertThat;
 
 public class ViewTweetsIT {
@@ -52,7 +53,7 @@ public class ViewTweetsIT {
     @Test
     public void givenAUserWithTweets_whenViewingThisUsersTweetsPage_thenISeeThisUsersTweets() throws MappingRegistrationException {
         List<String> expectedTweets = aListOfTweets();
-        TwitterUserFixture twitterUserWithTweets = aTwitterUser().withTweets(expectedTweets);
+        TwitterUserFixture twitterUserWithTweets = aTwitterUser("sbio").withTweets(expectedTweets);
         twitterAppPreconditionHelper.ensure(twitterUserWithTweets);
 
         TweetPage tweetPage = twitterAppNavigator.navigateToTwitterPageForUser(twitterUserWithTweets.getScreenname());
@@ -60,9 +61,6 @@ public class ViewTweetsIT {
         assertThat(actualTweets).containsOnly(expectedTweets.toArray());
     }
 
-    private TwitterUserFixture aTwitterUser() {
-        return new TwitterUserFixture().withScreenname("sbio");
-    }
 
     private List<String> aListOfTweets() {
         return Lists.newArrayList("Special Tweet 1", "Special Tweet 2", "Special Tweet 3");
